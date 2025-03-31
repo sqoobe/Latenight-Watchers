@@ -1,16 +1,29 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import SearchMovies from "./searchMovies";
+import { ThemeProvider } from "./ThemeContext";
+import SearchMovies from "/Users/Jacob/OneDrive/Projects/Latenight Watchers/components/searchMovies";
+import DarkModeToggle from "./DarkModeToggle";
+import "./styles/darkMode.css";
 
-class Main extends React.Component {
-  render() {
-    return (
+/**
+ * Main App component
+ *
+ * Wraps the application with ThemeProvider for dark mode functionality
+ * Includes the DarkModeToggle and SearchMovies components
+ */
+function App() {
+  return (
+    <ThemeProvider>
       <div className="container">
-        <h1 className="title">React Movie Search</h1>
-        <SearchMovies />
+        <header>
+          <h1 className="title">Movie Search App</h1>
+          <DarkModeToggle />
+        </header>
+        <main>
+          <SearchMovies />
+        </main>
       </div>
-    );
-  }
+    </ThemeProvider>
+  );
 }
 
-ReactDOM.render(<Main />, document.getElementById("root"));
+export default App;
