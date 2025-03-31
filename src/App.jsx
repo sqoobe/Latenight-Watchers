@@ -17,7 +17,7 @@ function App() {
     <ThemeProvider>
       <div className="container">
         <header>
-          <h1 className="title">Movie Search App</h1>
+          <h1 className="title">Latenight Watchers</h1>
           <ThemeToggle />
         </header>
         <main>
