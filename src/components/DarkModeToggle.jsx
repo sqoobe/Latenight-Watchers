@@ -1,13 +1,7 @@
 import React, { useContext } from 'react';
-import { ThemeContext } from './ThemeContext';
+import { ThemeContext } from '../context/ThemeContext';
 
-/**
- * Theme Toggle component
- * 
- * A button that toggles between dark and light mode
- * Uses ThemeContext to access the current theme state
- */
-function ThemeToggle() {
+export default function DarkModeToggle() {
   const { isDarkMode, toggleTheme } = useContext(ThemeContext);
   
   return (
@@ -19,6 +13,4 @@ function ThemeToggle() {
       {isDarkMode ? '☀️ Light Mode' : '🌙 Dark Mode'}
     </button>
   );
-}
-
-export default ThemeToggle;
+} 

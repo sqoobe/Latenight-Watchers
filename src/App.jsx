@@ -1,10 +1,14 @@
-
 import React from 'react';
-import { ThemeProvider } from './ThemeContext';
-import SearchMovies from "/Users/Jacob/OneDrive/Projects/Latenight Watchers/components/searchMovies";
-import ThemeToggle from './DarkModeToggle'; // You could rename this file to ThemeToggle.js
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ThemeProvider } from './context/ThemeContext';
+import { MovieProvider } from './context/MovieContext';
+import SearchMovies from './components/searchMovies';
+import Navbar from './components/Navbar';
+import Favorites from './pages/favorites';
+import Watchlist from './pages/watchlist';
 import './styles/darkMode.css';
-import './styles/lightMode.css';
+import './styles/lightmode.css';
+import './styles/index.css';
 
 /**
  * Main App component
@@ -15,15 +19,20 @@ import './styles/lightMode.css';
 function App() {
   return (
     <ThemeProvider>
-      <div className="container">
-        <header>
-          <h1 className="title">Latenight Watchers</h1>
-          <ThemeToggle />
-        </header>
-        <main>
-          <SearchMovies />
-        </main>
-      </div>
+      <MovieProvider>
+        <Router>
+          <div className="container">
+            <Navbar />
+            <main>
+              <Routes>
+                <Route path="/" element={<SearchMovies />} />
+                <Route path="/favorites" element={<Favorites />} />
+                <Route path="/watchlist" element={<Watchlist />} />
+              </Routes>
+            </main>
+          </div>
+        </Router>
+      </MovieProvider>
     </ThemeProvider>
   );
 }
