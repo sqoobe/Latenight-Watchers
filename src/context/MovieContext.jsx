@@ -1,5 +1,8 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
+// API key from environment variable
+const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+
 const MovieContext = createContext();
 
 export function MovieProvider({ children }) {
@@ -35,7 +38,7 @@ export function MovieProvider({ children }) {
 
     setIsLoading(true);
     try {
-      const url = `https://api.themoviedb.org/3/search/movie?api_key=37c0f7cf8ebd0ea898354c7c6ce17fc7&language=en-US&query=${query}&page=1&include_adult=false`;
+      const url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&query=${query}&page=1&include_adult=false`;
       const res = await fetch(url);
       const data = await res.json();
       setSearchResults(data.results || []);

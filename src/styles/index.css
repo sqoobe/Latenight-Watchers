@@ -400,12 +400,48 @@ small {
 .truncated-description {
   position: relative;
   margin-bottom: 1rem;
+  width: 100%;
+}
+
+.truncated-description .text-container {
+  position: relative;
+  width: 100%;
 }
 
 .truncated-description .card--desc {
   margin: 0;
   line-height: 1.5;
-  overflow: hidden;
+  font-size: 1.4rem;
+}
+
+.truncated-description .text-container::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2rem;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.9)
+  );
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+body.dark-mode .truncated-description .text-container::after {
+  background: linear-gradient(
+    to bottom,
+    rgba(30, 30, 30, 0),
+    rgba(30, 30, 30, 0.9)
+  );
+}
+
+.truncated-description .text-container[data-expanded="true"]::after,
+.truncated-description .text-container[data-state="expanded"]::after {
+  opacity: 0;
 }
 
 .read-more-button {
@@ -416,8 +452,28 @@ small {
   font-size: 1.4rem;
   padding: 0.5rem 0;
   margin-top: 0.5rem;
-  text-decoration: underline;
-  transition: color 0.2s ease;
+  display: inline-block;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.read-more-button::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: 0.4rem;
+  left: 0;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease;
+}
+
+.read-more-button:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
 }
 
 .read-more-button:hover {

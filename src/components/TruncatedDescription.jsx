@@ -1,37 +1,59 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useRef, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 const TruncatedDescription = ({ text }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const maxLength = 200;
+  const [textHeight, setTextHeight] = useState("auto");
+  const fullTextRef = useRef(null);
+  const maxLength = 150;
   const shouldTruncate = text.length > maxLength;
+  
+  const truncatedText = text.slice(0, maxLength) + '...';
 
-  const truncatedText = shouldTruncate && !isExpanded 
-    ? text.slice(0, maxLength) + '...' 
-    : text;
+  useEffect(() => {
+    if (fullTextRef.current) {
+      setTextHeight(fullTextRef.current.scrollHeight);
+    }
+  }, [text, isExpanded]);
+
+  const textVariants = {
+    collapsed: { 
+      height: "4.5em", 
+      overflow: "hidden" 
+    },
+    expanded: { 
+      height: textHeight, 
+      overflow: "visible" 
+    }
+  };
 
   return (
     <div className="truncated-description">
-      <AnimatePresence initial={false}>
-        <motion.p
-          key={isExpanded ? 'expanded' : 'collapsed'}
-          initial={{ height: 0 }}
-          animate={{ height: 'auto' }}
-          exit={{ height: 0 }}
-          transition={{ duration: 0.3, ease: 'easeInOut' }}
-          className="card--desc"
-        >
-          {truncatedText}
-        </motion.p>
-      </AnimatePresence>
-      
-      {shouldTruncate && (
-        <button
-          onClick={() => setIsExpanded(!isExpanded)}
-          className="read-more-button"
-        >
-          {isExpanded ? 'Show less' : 'Read more'}
-        </button>
+      {shouldTruncate ? (
+        <>
+          <motion.div
+            className="text-container"
+            initial="collapsed"
+            animate={isExpanded ? "expanded" : "collapsed"}
+            variants={textVariants}
+            transition={{ duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] }}
+            data-expanded={isExpanded}
+          >
+            <p className="card--desc" ref={fullTextRef}>
+              {isExpanded ? text : truncatedText}
+            </p>
+          </motion.div>
+
+          <button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="read-more-button"
+            aria-expanded={isExpanded}
+          >
+            {isExpanded ? 'Show less' : 'Read more'}
+          </button>
+        </>
+      ) : (
+        <p className="card--desc">{text}</p>
       )}
     </div>
   );

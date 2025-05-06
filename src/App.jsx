@@ -21,16 +21,16 @@ function App() {
     <ThemeProvider>
       <MovieProvider>
         <Router>
-          <div className="container">
+      <div className="container">
             <Navbar />
-            <main>
+        <main>
               <Routes>
                 <Route path="/" element={<SearchMovies />} />
                 <Route path="/favorites" element={<Favorites />} />
                 <Route path="/watchlist" element={<Watchlist />} />
               </Routes>
-            </main>
-          </div>
+        </main>
+      </div>
         </Router>
       </MovieProvider>
     </ThemeProvider>
